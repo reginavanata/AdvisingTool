@@ -1,0 +1,14 @@
+{
+  "name": "rvanata/328/dating",
+  "description": "dating website",
+  "license": "open source",
+  "authors": [
+    {
+      "name": "Regina Vanata",
+      "email": "vanata.regina@student.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
