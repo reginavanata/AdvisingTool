@@ -78,10 +78,13 @@ $f3->route('GET|POST /interests', function($f3) {
         //TODO: Validate the data
 
         //add the data to the session variable
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['state'] = $_POST['state'];
-        $_SESSION['seeking'] = $_POST['seeking'];
-        $_SESSION['inputBio'] = $_POST['inputBio'];
+        if(isset($_POST['interests'])){
+            $_SESSION['interests'] = implode(", ", $_POST['interests']);
+
+        }
+        else{
+            $_SESSION['interests'] = "None selected";
+        }
 
         //redirect user to next page
         $f3->reroute('summary');
@@ -91,6 +94,17 @@ $f3->route('GET|POST /interests', function($f3) {
     $view = new Template();
     echo $view->render('views/interests.html');
 
+});
+
+//Define a summary route
+$f3->route('GET /summary', function() {
+    //echo "<h1>My Diner</h1>";
+
+    $view = new Template();
+    echo $view->render('views/profile-summary.html');
+
+    //clear the session data
+    session_destroy();
 });
 
 //run fat-free
