@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<include href="views/header.html"></include>
+<div class="container border mt-3">
+    <div class="row">
+        <div class="col-6 border mt-3 ml-3 mb-3">
+            <p class="border mt-3 mb-0">Name: {{@SESSION.fName}} {{@SESSION.lName}}</p>
+            <p class="border mb-0">Gender: {{@SESSION.genderOptions}}</p>
+            <p class="border mb-0">Age: {{@SESSION.age}}</p>
+            <p class="border mb-0">Phone: {{@SESSION.phone}}</p>
+            <p class="border mb-0">Email: {{@SESSION.email}}</p>
+            <p class="border mb-0">State: {{@SESSION.state}}</p>
+            <p class="border mb-0">Seeking: {{@SESSION.seeking}}</p>
+            <p class="border">Interests: {{@SESSION.interests}}</p>
+        </div>
+        <div class="card col-5">
+            <img class="card-img-top" src="images/placeholder.jpg" alt="Profile Picture">
+            <div class="card-body">
+                <p>Biography</p>
+                <p>{{@SESSION.inputBio}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center">
+        <button type="submit" class="btn btn-primary align-content-center" href="profile">Contact Me!</button>
+    </div>
+
+</div>
 
 </body>
 </html>
