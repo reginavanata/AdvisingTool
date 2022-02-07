@@ -1,5 +1,52 @@
 <include href="views/header.html"></include>
-<body>
+
+<div class="container border mt-3">
+    <h2>Personal Information</h2>
+    <hr>
+    <div class="row">
+        <div class="col-8">
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="inputFName">First Name</label>
+                    <input type="text" class="form-control" id="inputFName" name="fName" aria-describedby="firstName">
+                </div>
+                <div class="form-group">
+                    <label for="inputLName">Last Name</label>
+                    <input type="text" class="form-control" id="inputLName" name="lName" aria-describedby="lastName">
+                </div>
+                <div class="form-group">
+                    <label for="inputAge">Age</label>
+                    <input type="text" class="form-control" id="inputAge" name="age" aria-describedby="age">
+                </div>
+                <label>Gender</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="genderOptions" id="inlineRadio1" value="female">
+                    <label class="form-check-label" for="inlineRadio1">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="genderOptions" id="inlineRadio2" value="Male">
+                    <label class="form-check-label" for="inlineRadio2">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="genderOptions" id="inlineRadio3" value="nonbinary">
+                    <label class="form-check-label" for="inlineRadio3">Non-Binary</label>
+                </div>
+                <div class="form-group">
+                    <label for="inputPhone">Phone Number</label>
+                    <input type="text" class="form-control" id="inputPhone" name="phone" aria-describedby="phone number">
+                    <button type="submit" class="btn btn-primary align-content-end" href="profile">Next ></button>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-4">
+        <div class="card text-dark bg-light mt-3">
+            <p><b>Note:</b> All information is protected by our privacy policy. Profile information
+            can only be viewed by others with your permission.</p>
+        </div>
+    </div>
+    </div>
+</div>
 
 </body>
 </html>
