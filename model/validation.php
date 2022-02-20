@@ -1,18 +1,4 @@
 <?php
-    function validChoices($userChoices){
-
-        //store the valid condiments
-        $choices = getChoices();
-
-        //check each selected condiment
-        foreach ($userChoices as $selection){
-            if(!in_array($selection, $choices)){
-                return false;
-            }
-        }
-        return true;
-
-    }
 
     function validName($name){
         if($name == ""){
