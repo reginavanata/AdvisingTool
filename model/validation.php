@@ -58,9 +58,23 @@
     }
 
     function validOutdoor($outdoorChoices){
+        $choices = getOutdoor();
 
+        foreach ($outdoorChoices as $selection){
+            if(!in_array($selection, $choices)){
+                return false;
+            }
+        }
+        return true;
     }
 
     function validIndoor($indoorChoices){
+        $choices = getOutdoor();
 
+        foreach ($indoorChoices as $selection){
+            if(!in_array($selection, $choices)){
+                return false;
+            }
+        }
+        return true;
     }
