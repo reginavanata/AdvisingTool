@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 
 //Start the session
 session_start();
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 //require the autoload file
 require_once ('vendor/autoload.php');
