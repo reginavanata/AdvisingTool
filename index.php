@@ -10,10 +10,12 @@ error_reporting(E_ALL);
 
 //Start the session
 session_start();
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 //require the autoload file
 require_once ('vendor/autoload.php');
+require ('model/data-layer.php');
+require ('model/validation.php');
 
 //create instance of Base class
 $f3 = Base::instance();
@@ -32,18 +34,58 @@ $f3->route('GET|POST /personal', function($f3) {
     //If the form has been posted
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         //TODO: Validate the data
-
+        $fName = $_POST['fName'];
+        $lName = $_POST['lName'];
+        $age = $_POST['age'];
+        $gender = $_POST['genderOptions'];
+        $phone = $_POST['phone'];
         //add the data to the session variable
-        $_SESSION['fName'] = $_POST['fName'];
-        $_SESSION['lName'] = $_POST['lName'];
-        $_SESSION['age'] = $_POST['age'];
-        $_SESSION['genderOptions'] = $_POST['genderOptions'];
-        $_SESSION['phone'] = $_POST['phone'];
+        //$_SESSION['fName'] =
+        //$_SESSION['lName'] =
+        //$_SESSION['age'] =
+        //$_SESSION['genderOptions'] =
+        //$_SESSION['phone'] =
+        if(validName($fName)){
+            $f3->set('SESSION.fName', $fName);
+        }
+        else{
+            $f3->set('errors["fName"]', 'Please enter a first name');
+        }
+
+        if(validName($lName)){
+            $f3->set('SESSION.lName', $lName);
+        }
+        else{
+            $f3->set('errors["lName"]', 'Please enter a last name');
+        }
+
+        if(validAge($age)){
+            $f3->set('SESSION.age', $age);
+        }
+        else{
+            $f3->set('errors["age"]', 'Please enter an age between 18 and 118');
+        }
+
+        if(validPhone($phone)){
+            $f3->set('SESSION.phone', $phone);
+        }
+        else{
+            $f3->set('errors["phone"]', 'Please enter a valid phone number');
+        }
+
+        $f3->set('SESSION.gender', $gender);
 
         //redirect user to next page
-        $f3->reroute('profile');
-
+        if(empty($f3->get('errors'))){
+            $f3->reroute('profile');
+        }
     }
+
+    $f3->set('fName', $fName);
+    $f3->set('lNamr', $lName);
+    $f3->set('age', $age);
+    $f3->set('phone', $phone);
+    $f3->set('gender', $gender);
 
     $view = new Template();
     echo $view->render('views/personal-info.html');
