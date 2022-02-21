@@ -141,6 +141,10 @@ $f3->route('GET|POST /profile', function($f3) {
 
 //define a interests route
 $f3->route('GET|POST /interests', function($f3) {
+
+    //get interests from the model and add to F3 hive
+    $f3->set('indoor', getIndoor());
+    $f3->set('outdoor', getOutdoor());
     //If the form has been posted
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         //TODO: Validate the data
