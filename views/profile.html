@@ -9,6 +9,10 @@
         <div class="form-group">
             <label for="inputEmail">Email</label>
             <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="email">
+            <!-- Display an error if there is one -->
+            <check if="{{ isset(@errors['email']) }}">
+                <span class="err">{{ @errors['email'] }}</span>
+            </check>
         </div>
         <label class="mr-sm-2" for="stateSelect">State</label>
         <select class="custom-select mr-sm-2" id="stateSelect" name="state">
@@ -83,8 +87,6 @@
             <textarea  id="inputBio" name="inputBio" rows="4" cols="50" aria-describedby="Biography">
 
             </textarea>
-
-
         </div>
             <div class="container text-right pr-5">
                 <button type="submit" class="btn btn-primary align-content-end" href="interests">

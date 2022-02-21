@@ -76,12 +76,14 @@ $f3->route('GET|POST /personal', function($f3) {
             $f3->set('errors["phone"]', 'Please enter a valid phone number');
         }
 
-        if(validGender($gender)){
+
+       if(validGender($gender)){
             $f3->set('SESSION.genderOptions', $gender);
         }
-        else{
+       //gender is optional, no error checking
+         /*else{
             $f3->set('errors["gender"]', 'Please select a gender option');
-        }
+        }*/
 
         //redirect user to next page if there are no errors
         if(empty($f3->get('errors'))){
@@ -102,19 +104,34 @@ $f3->route('GET|POST /personal', function($f3) {
 
 //define a profile route
 $f3->route('GET|POST /profile', function($f3) {
+    $email = "";
+    $state = "";
+    $seeking = "";
+    $inputBio = "";
     //If the form has been posted
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        //add the data to the session variable
+        $email = $_POST['email'];
+        $state = $_POST['state'];
+        $seeking = $_POST['seeking'];
+        $inputBio = $_POST['inputBio'];
         //TODO: Validate the data
 
-        //add the data to the session variable
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['state'] = $_POST['state'];
-        $_SESSION['seeking'] = $_POST['seeking'];
-        $_SESSION['inputBio'] = $_POST['inputBio'];
+        if(validEmail($email)){
+            $f3->set('SESSION.email', $email);
+        }
+        else{
+            $f3->set('errors["email"]', 'Please enter a valid email address');
+        }
+
+        $f3->set('SESSION.state', $state);
+        $f3->set('SESSION.seeking', $seeking);
+        $f3->set('SESSION.inputBio', $inputBio);
 
         //redirect user to next page
-        $f3->reroute('interests');
-
+        if(empty($f3->get('errors'))){
+            $f3->reroute('interests');
+        }
     }
 
     $view = new Template();
