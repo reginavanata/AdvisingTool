@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 
 //Start the session
 session_start();
-//var_dump($_SESSION);
+var_dump($_SESSION);
 
 //require the autoload file
 require_once ('vendor/autoload.php');
@@ -31,20 +31,23 @@ $f3->route('GET /', function() {
 
 //define a personal-information route
 $f3->route('GET|POST /personal', function($f3) {
+    //Initialize input variables
+    $fName = "";
+    $lName = "";
+    $age = "";
+    $gender = "";
+    $phone = "";
+
     //If the form has been posted
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        //TODO: Validate the data
+
         $fName = $_POST['fName'];
         $lName = $_POST['lName'];
         $age = $_POST['age'];
-        $gender = $_POST['genderOptions'];
+        $gender = $_POST['gender'];
         $phone = $_POST['phone'];
-        //add the data to the session variable
-        //$_SESSION['fName'] =
-        //$_SESSION['lName'] =
-        //$_SESSION['age'] =
-        //$_SESSION['genderOptions'] =
-        //$_SESSION['phone'] =
+
+        //Validate the data
         if(validName($fName)){
             $f3->set('SESSION.fName', $fName);
         }
@@ -73,19 +76,25 @@ $f3->route('GET|POST /personal', function($f3) {
             $f3->set('errors["phone"]', 'Please enter a valid phone number');
         }
 
-        $f3->set('SESSION.gender', $gender);
+        if(validGender($gender)){
+            $f3->set('SESSION.genderOptions', $gender);
+        }
+        else{
+            $f3->set('errors["gender"]', 'Please select a gender option');
+        }
 
-        //redirect user to next page
+        //redirect user to next page if there are no errors
         if(empty($f3->get('errors'))){
             $f3->reroute('profile');
         }
     }
 
     $f3->set('fName', $fName);
-    $f3->set('lNamr', $lName);
+    $f3->set('lName', $lName);
     $f3->set('age', $age);
     $f3->set('phone', $phone);
-    $f3->set('gender', $gender);
+    $f3->set('userGender', $gender);
+    $f3->set('genders', getGender());
 
     $view = new Template();
     echo $view->render('views/personal-info.html');

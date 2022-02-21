@@ -1,5 +1,9 @@
 <?php
 
+    function validGender($gender){
+        return in_array($gender, getGender());
+    }
+
     function validName($name){
         if($name == ""){
             return false;

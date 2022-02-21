@@ -8,7 +8,7 @@
         <div class="col-8">
         <div class="form-group">
             <label for="inputFName">First Name</label>
-            <input type="text" class="form-control" id="inputFName" name="fName" aria-describedby="firstName">
+            <input type="text" class="form-control" id="inputFName" name="fName" aria-describedby="firstName" value="{{@fName}}">
             <!-- Display an error if there is one -->
             <check if="{{ isset(@errors['fName']) }}">
                 <span class="err">{{ @errors['fName'] }}</span>
@@ -16,7 +16,7 @@
         </div>
         <div class="form-group">
             <label for="inputLName">Last Name</label>
-            <input type="text" class="form-control" id="inputLName" name="lName" aria-describedby="lastName">
+            <input type="text" class="form-control" id="inputLName" name="lName" aria-describedby="lastName" value="{{@lName}}">
             <!-- Display an error if there is one -->
             <check if="{{ isset(@errors['lName']) }}">
                 <span class="err">{{ @errors['lName'] }}</span>
@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             <label for="inputAge">Age</label>
-            <input type="text" class="form-control" id="inputAge" name="age" aria-describedby="age">
+            <input type="text" class="form-control" id="inputAge" name="age" aria-describedby="age" value="{{@age}}">
             <!-- Display an error if there is one -->
             <check if="{{ isset(@errors['age']) }}">
                 <span class="err">{{ @errors['age'] }}</span>
@@ -32,17 +32,16 @@
         </div>
         <label>Gender</label><br>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="genderOptions" id="inlineRadio1" value="female">
-            <label class="form-check-label" for="inlineRadio1">Female</label>
+            <repeat group="{{@genders}}" value="{{@gender}}">
+                <input class="form-check-input" type="radio" name="gender" value="{{@gender}}"
+                <check if="{{@gender==@userGender}}">checked</check>
+                <label class="form-check-label">{{ucfirst(@gender)}} &nbsp</label>
+            </repeat>
         </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="genderOptions" id="inlineRadio2" value="Male">
-            <label class="form-check-label" for="inlineRadio2">Male</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="genderOptions" id="inlineRadio3" value="nonbinary">
-            <label class="form-check-label" for="inlineRadio3">Non-Binary</label>
-        </div>
+            <!-- Display an error if there is one -->
+            <check if="{{ isset(@errors['gender']) }}">
+                <span class="err">{{ @errors['gender'] }}</span>
+            </check>
         <div class="form-group">
             <label for="inputPhone">Phone Number</label>
             <input type="text" class="form-control" id="inputPhone" name="phone" aria-describedby="phone number">
