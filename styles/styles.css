@@ -1,11 +1,12 @@
 blockquote {
     margin-left: 3em;
 }
-
+label[for=premiumAccount] {
+    font-weight: normal;
+}
 label {
     font-weight: bold;
 }
-
 .form-check-label {
     font-weight: normal;
 }
