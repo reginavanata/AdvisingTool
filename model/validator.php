@@ -1,24 +1,30 @@
 <?php
 
-    function validGender($gender){
+class Validator
+{
+    static function validGender($gender)
+    {
         return in_array($gender, getGender());
     }
 
-    function validName($name){
+    static function validName($name)
+    {
         if($name == ""){
             return false;
         }
         return true;
     }
 
-    function validAge($age){
+    static function validAge($age)
+    {
         if($age < 18 || $age > 118){
             return false;
         }
         return true;
     }
 
-    function validPhone($phone){
+    static function validPhone($phone)
+    {
         $isValid = true;
         //if phone is less than 10 digits
         //or more than 14 digits
@@ -40,14 +46,16 @@
         }
     }
 
-    function validEmail($email){
+    static function validEmail($email)
+    {
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             return false;
         }
         return true;
     }
 
-    function validOutdoor($outdoorChoices){
+    static function validOutdoor($outdoorChoices)
+    {
         $choices = getOutdoor();
 
         foreach ($outdoorChoices as $selection){
@@ -58,7 +66,8 @@
         return true;
     }
 
-    function validIndoor($indoorChoices){
+    static function validIndoor($indoorChoices)
+    {
         $choices = getOutdoor();
 
         foreach ($indoorChoices as $selection){
@@ -68,3 +77,6 @@
         }
         return true;
     }
+}
+
+
