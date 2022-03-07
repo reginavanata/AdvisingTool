@@ -18,6 +18,10 @@
                         </div>
                     </div>
                 </div>
+                <!-- Display an error if there is one -->
+                <check if="{{ isset(@errors['interests']) }}">
+                    <span class="err">{{ @errors['interests'] }}</span>
+                </check>
                 <div class="form-group">
                     <label>Outdoor Interests Enjoyed with Coffee</label><br>
                     <div class="container">
@@ -31,6 +35,9 @@
 
                     </div>
                 </div>
+                <check if="{{ isset(@errors['interests']) }}">
+                    <span class="err">{{ @errors['interests'] }}</span>
+                </check>
                 <div class="container text-right">
                     <button type="submit" class="btn btn-primary align-content-end" href="summary">
                         Next >

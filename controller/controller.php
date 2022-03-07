@@ -17,11 +17,11 @@ class Controller
         echo $view->render('views/home.html');
     }
 
-    function personalInfo()
+    function personal()
     {
         //initialize input variables
-        $fName = "";
-        $lName = "";
+        $fname = "";
+        $lname = "";
         $age = "";
         $gender = "";
         $phone = "";
@@ -29,48 +29,53 @@ class Controller
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            $fName = $_POST['fName'];
-            $lName = $_POST['lName'];
+            $fname = $_POST['fName'];
+            $lname = $_POST['lName'];
             $age = $_POST['age'];
             $gender = $_POST['gender'];
             $phone = $_POST['phone'];
+            $premium = $_POST['premiumAccount'];
 
             //instantiate a member object
-            $_SESSION['member'] = new Member();
-
-
+            if(isset($premium)){
+                $_SESSION['member'] = new PremiumMember($fname, $lname, $age, $gender, $phone);
+            }
+            else{
+                $_SESSION['member'] = new Member($fname, $lname, $age, $gender, $phone);
+            }
             //Validate the data
-            if(validName($fName)){
-                $this->_f3->set('SESSION.fName', $fName);
+            if(Validator::validName($fname)){
+                //add the data to the session variable
+                $_SESSION['member']->setFname($fname);
             }
             else{
                 $this->_f3->set('errors["fName"]', 'Please enter a first name');
             }
 
-            if(validName($lName)){
-                $this->_f3->set('SESSION.lName', $lName);
+            if(Validator::validName($lname)){
+                $_SESSION['member']->setLname($lname);
             }
             else{
                 $this->_f3->set('errors["lName"]', 'Please enter a last name');
             }
 
-            if(validAge($age)){
-                $this->_f3->set('SESSION.age', $age);
+            if(Validator::validAge($age)){
+                $_SESSION['member']->setAge($age);
             }
             else{
                 $this->_f3->set('errors["age"]', 'Please enter an age between 18 and 118');
             }
 
-            if(validPhone($phone)){
-                $this->_f3->set('SESSION.phone', $phone);
+            if(Validator::validPhone($phone)){
+                $_SESSION['member']->setPhone($phone);
             }
             else{
                 $this->_f3->set('errors["phone"]', 'Please enter a valid phone number');
             }
 
 
-            if(validGender($gender)){
-                $this->_f3->set('SESSION.genderOptions', $gender);
+            if(Validator::validGender($gender)){
+                $_SESSION['member']->setGender($gender);
             }
             //gender is optional, no error checking
             /*else{
@@ -83,14 +88,95 @@ class Controller
             }
         }
 
-        $this->_f3->set('fName', $fName);
-        $this->_f3->set('lName', $lName);
+        $this->_f3->set('fName', $fname);
+        $this->_f3->set('lName', $lname);
         $this->_f3->set('age', $age);
         $this->_f3->set('phone', $phone);
         $this->_f3->set('userGender', $gender);
-        $this->_f3->set('genders', getGender());
+        $this->_f3->set('genders', DataLayer::getGender());
 
         $view = new Template();
         echo $view->render('views/personal-info.html');
+    }
+
+    function profile()
+    {
+        $email = "";
+        $state = "";
+        $seeking = "";
+        $inputBio = "";
+        //If the form has been posted
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            //add the data to the session variable
+            $email = $_POST['email'];
+            $state = $_POST['state'];
+            $seeking = $_POST['seeking'];
+            $inputBio = $_POST['inputBio'];
+
+            if(Validator::validEmail($email)){
+                $_SESSION['member']->setEmail($email);
+            }
+            else{
+                $this->_f3->set('errors["email"]', 'Please enter a valid email address');
+            }
+
+            $_SESSION['member']->setState($state);
+            $_SESSION['member']->setSeeking($seeking);
+            $_SESSION['member']->setBio($inputBio);
+
+            //redirect user to next page
+            if(empty($this->_f3->get('errors'))){
+                if($_SESSION['member'] === PremiumMember::class){
+                    $this->_f3->reroute('interests');
+                }
+                else{
+                    $this->_f3->reroute('summary');
+                }
+
+            }
+        }
+
+        $view = new Template();
+        echo $view->render('views/profile.html');
+
+    }
+
+    function interests()
+    {
+        //get interests from the model and add to F3 hive
+        $this->_f3->set('indoor', DataLayer::getIndoor());
+        $this->_f3->set('outdoor', DataLayer::getOutdoor());
+        //If the form has been posted
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            //TODO: Validate the data
+
+            //add the data to the session variable
+            if(isset($_POST['interests'])){
+                $interests = $_POST['interests'];
+                if(Validator::validOutdoor($interests) && Validator::validIndoor($interests)){
+                    $_SESSION['interests'] = implode(", ", $_POST['interests']);
+                }
+            }
+            else{
+                $this->_f3->set("errors['interests']", "Invalid selection");
+            }
+            //redirect user to next page
+            if(empty($this->_f3->get('errors'))){
+                $_SESSION['premiumMember']->setInterests($interests);
+                $this->_f3->reroute('summary');
+            }
+        }
+
+        $view = new Template();
+        echo $view->render('views/interests.html');
+    }
+
+    function summary()
+    {
+        $view = new Template();
+        echo $view->render('views/summary.html');
+
+        //Clear the session data
+        session_destroy();
     }
 }

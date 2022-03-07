@@ -1,15 +1,21 @@
 <?php
 
-    function getGender(){
+class DataLayer
+{
+    static function getGender()
+    {
         return array('female', 'non-binary', 'male');
     }
 
-    function getIndoor(){
+    static function getIndoor()
+    {
         return array('TV', 'Movies', 'Cooking', 'Cooking', 'Board Games', 'Puzzles',
-                        'Reading', 'Playing Cards', 'Video Games');
+            'Reading', 'Playing Cards', 'Video Games');
     }
 
-    function getOutdoor(){
+    static function getOutdoor()
+    {
         return array('Camping', 'Kayaking', 'Rock Climbing', 'Hiking', 'Surfing',
-                        'Snowboarding', 'Swimming');
+            'Snowboarding', 'Swimming');
     }
+}

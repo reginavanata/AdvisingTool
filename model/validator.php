@@ -4,7 +4,7 @@ class Validator
 {
     static function validGender($gender)
     {
-        return in_array($gender, getGender());
+        return in_array($gender, DataLayer::getGender());
     }
 
     static function validName($name)
@@ -56,7 +56,7 @@ class Validator
 
     static function validOutdoor($outdoorChoices)
     {
-        $choices = getOutdoor();
+        $choices = DataLayer::getOutdoor();
 
         foreach ($outdoorChoices as $selection){
             if(!in_array($selection, $choices)){
@@ -68,7 +68,7 @@ class Validator
 
     static function validIndoor($indoorChoices)
     {
-        $choices = getOutdoor();
+        $choices = DataLayer::getOutdoor();
 
         foreach ($indoorChoices as $selection){
             if(!in_array($selection, $choices)){
