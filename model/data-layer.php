@@ -2,6 +2,11 @@
 
 class DataLayer
 {
+    function savedMember()
+    {
+
+    }
+
     static function getGender()
     {
         return array('female', 'non-binary', 'male');

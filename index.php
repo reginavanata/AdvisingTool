@@ -17,6 +17,8 @@ require_once ('vendor/autoload.php');
 //Start the session
 session_start();
 
+var_dump($_SESSION);
+
 //create instance of Base class
 $f3 = Base::instance();
 $con = new Controller($f3);

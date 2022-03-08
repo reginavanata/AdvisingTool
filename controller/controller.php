@@ -126,7 +126,7 @@ class Controller
 
             //redirect user to next page
             if(empty($this->_f3->get('errors'))){
-                if($_SESSION['member'] === PremiumMember::class){
+                if($_SESSION['member'] instanceof PremiumMember){
                     $this->_f3->reroute('interests');
                 }
                 else{
@@ -143,26 +143,37 @@ class Controller
 
     function interests()
     {
+        $outdoorInterests = "";
+        $indoorInterests = "";
         //get interests from the model and add to F3 hive
         $this->_f3->set('indoor', DataLayer::getIndoor());
         $this->_f3->set('outdoor', DataLayer::getOutdoor());
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-            //TODO: Validate the data
 
             //add the data to the session variable
-            if(isset($_POST['interests'])){
-                $interests = $_POST['interests'];
-                if(Validator::validOutdoor($interests) && Validator::validIndoor($interests)){
-                    $_SESSION['interests'] = implode(", ", $_POST['interests']);
+            if(isset($_POST['indoor'])){
+                $indoorInterests = $_POST['indoor'];
+                if(Validator::validIndoor($indoorInterests)){
+                    $_SESSION['indoor'] = implode(", ", $_POST['indoor']);
                 }
             }
-            else{
-                $this->_f3->set("errors['interests']", "Invalid selection");
+            if(isset($_POST['outdoor'])){
+                $outdoorInterests = $_POST['outdoor'];
+                if(Validator::validOutdoor($outdoorInterests)){
+                    $_SESSION['outdoor'] = implode(", ", $_POST['outdoor']);
+                }
             }
             //redirect user to next page
             if(empty($this->_f3->get('errors'))){
-                $_SESSION['premiumMember']->setInterests($interests);
+                if(!empty($_SESSION['indoor'])){
+                    $_SESSION['member']->setInDoorInterests($indoorInterests);
+                }
+
+                if(!empty($_SESSION['outdoor'])){
+                    $_SESSION['member']->setOutdoorInterests($outdoorInterests);
+                }
+
                 $this->_f3->reroute('summary');
             }
         }
@@ -173,8 +184,9 @@ class Controller
 
     function summary()
     {
+        //$GLOBALS['dataLayer']->saveMember($_SESSION['member']);
         $view = new Template();
-        echo $view->render('views/summary.html');
+        echo $view->render('views/profile-summary.html');
 
         //Clear the session data
         session_destroy();

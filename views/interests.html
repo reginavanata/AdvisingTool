@@ -11,32 +11,29 @@
                     <div class="container">
                         <div class="form-check form-check-inline">
                         <repeat group="{{@indoor}}" value="{{@indoor}}">
-                            <input class="form-check-input" type="checkbox" value="{{@indoor}}" name="interests[]">
+                            <input class="form-check-input" type="checkbox" value="{{@indoor}}" name="indoor[]">
                             <label class="form-check-label">&nbsp {{ucfirst(@indoor)}} &nbsp</label>
-
                         </repeat>
                         </div>
                     </div>
                 </div>
                 <!-- Display an error if there is one -->
-                <check if="{{ isset(@errors['interests']) }}">
-                    <span class="err">{{ @errors['interests'] }}</span>
+                <check if="{{ isset(@errors['indoor']) }}">
+                    <span class="err">{{ @errors['indoor'] }}</span>
                 </check>
                 <div class="form-group">
                     <label>Outdoor Interests Enjoyed with Coffee</label><br>
                     <div class="container">
                         <div class="form-check form-check-inline">
                             <repeat group="{{@outdoor}}" value="{{@outdoor}}">
-                                <input class="form-check-input" type="checkbox" id="{{@outdoor}}" value="{{@outdoor}}" name="interests[]">
+                                <input class="form-check-input" type="checkbox" id="{{@outdoor}}" value="{{@outdoor}}" name="outdoor[]">
                                 <label class="form-check-label">&nbsp {{ucfirst(@outdoor)}} &nbsp</label>
-
                             </repeat>
                         </div>
-
                     </div>
                 </div>
-                <check if="{{ isset(@errors['interests']) }}">
-                    <span class="err">{{ @errors['interests'] }}</span>
+                <check if="{{ isset(@errors['outdoor']) }}">
+                    <span class="err">{{ @errors['outdoor'] }}</span>
                 </check>
                 <div class="container text-right">
                     <button type="submit" class="btn btn-primary align-content-end" href="summary">

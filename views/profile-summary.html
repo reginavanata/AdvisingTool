@@ -2,20 +2,20 @@
 <div class="container border mt-3">
     <div class="row">
         <div class="col-6 border mt-3 ml-3 mb-3">
-            <p class="border mt-3 mb-0">Name: {{@SESSION.fName}} {{@SESSION.lName}}</p>
-            <p class="border mb-0">Gender: {{@SESSION.genderOptions}}</p>
-            <p class="border mb-0">Age: {{@SESSION.age}}</p>
-            <p class="border mb-0">Phone: {{@SESSION.phone}}</p>
-            <p class="border mb-0">Email: {{@SESSION.email}}</p>
-            <p class="border mb-0">State: {{@SESSION.state}}</p>
-            <p class="border mb-0">Seeking: {{@SESSION.seeking}}</p>
-            <p class="border">Interests: {{@SESSION.interests}}</p>
+            <p class="border mt-3 mb-0">Name: {{@SESSION.member->getFname()}} {{@SESSION.member->getLname()}}</p>
+            <p class="border mb-0">Gender: {{@SESSION.member->getGender()}}</p>
+            <p class="border mb-0">Age: {{@SESSION.member->getAge()}}</p>
+            <p class="border mb-0">Phone: {{@SESSION.member->getPhone()}}</p>
+            <p class="border mb-0">Email: {{@SESSION.member->getEmail()}}</p>
+            <p class="border mb-0">State: {{@SESSION.member->getState()}}</p>
+            <p class="border mb-0">Seeking: {{@SESSION.member->getSeeking()}}</p>
+            <p class="border">Interests: {{@SESSION.member->getInDoorInterests()}} {{@SESSION.member->getOutDoorInterests()}}</p>
         </div>
         <div class="card col-5">
             <img class="card-img-top" src="images/placeholder.jpg" alt="Profile Picture">
             <div class="card-body">
                 <p>Biography</p>
-                <p>{{@SESSION.inputBio}}</p>
+                <p>{{@SESSION.member->getBio()}}</p>
             </div>
         </div>
     </div>
