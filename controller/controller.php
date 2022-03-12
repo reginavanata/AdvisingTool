@@ -191,4 +191,14 @@ class Controller
         //Clear the session data
         session_destroy();
     }
+
+    function admin()
+    {
+        $members = $GLOBALS['dataLayer']->getMembers();
+        $this->_f3->set('members', $members);
+
+        //display the view page
+        $view = new Template();
+        echo $view->render('views/admin.html');
+    }
 }
