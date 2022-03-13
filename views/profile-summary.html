@@ -9,7 +9,11 @@
             <p class="border mb-0">Email: {{@SESSION.member->getEmail()}}</p>
             <p class="border mb-0">State: {{@SESSION.member->getState()}}</p>
             <p class="border mb-0">Seeking: {{@SESSION.member->getSeeking()}}</p>
-            <p class="border">Interests: {{@SESSION.member->getInDoorInterests()}} {{@SESSION.member->getOutDoorInterests()}}</p>
+            <check if="{{ @accountPremium }}" >
+                <true>
+                    <p class="border">Interests: {{@SESSION.member->getInDoorInterests()}} {{@SESSION.member->getOutDoorInterests()}}</p>
+                </true>
+            </check>
         </div>
         <div class="card col-5">
             <img class="card-img-top" src="images/placeholder.jpg" alt="Profile Picture">

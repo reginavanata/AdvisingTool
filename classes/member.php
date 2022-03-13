@@ -1,93 +1,184 @@
 <?php
 
-//Require the database credentials
-require_once $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php';
+// 328/dating/member.php
 
-/**
- * Class DataLayer accesses data needed for the Diner app
- */
-class DataLayer
+class Member
 {
-    //Add a field to store the database connection object
-    private $_dbh;
+    private $_fname;
+    private $_lname;
+    private $_age;
+    private $_gender;
+    private $_phone;
+    private $_email;
+    private $_state;
+    private $_seeking;
+    private $_bio;
 
-    //Define a default constructor
-    //TODO: Add doc block
-    function __construct()
+    /**
+     * @param $_fname
+     * @param $_lname
+     * @param $_age
+     * @param $_gender
+     * @param $_phone
+     * @param $_email
+     * @param $_state
+     * @param $_seeking
+     * @param $_bio
+     */
+    public function __construct($_fname, $_lname, $_age, $_gender, $_phone)
     {
-        try {
-            //Instantiate a PDO database object
-            $this->_dbh = new PDO (DB_DSN, DB_USERNAME, DB_PASSWORD);
-            //echo "Yay!";
-        }
-        catch (PDOException $e) {
-            echo "Error connecting to DB " . $e->getMessage();
-        }
+        $this->_fname = $_fname;
+        $this->_lname = $_lname;
+        $this->_age = $_age;
+        $this->_gender = $_gender;
+        $this->_phone = $_phone;
     }
 
     /**
-     * saveOrder accepts an Order object and inserts it into the DB
-     * @param $order An Order object
-     * @return string The order_id of the inserted row
+     * @return string
      */
-    function saveOrder($order)
+    public function getFname()
     {
-        //1. Define the query
-        $sql = "INSERT INTO diner_order (item, meal, condiments)
-                VALUES (:food, :meal, :condiments)";
-
-        //2. Prepare the statement
-        $statement = $this->_dbh->prepare($sql);
-
-        //3. Bind the parameters
-        $statement->bindParam(':food', $order->getFood());
-        $statement->bindParam(':meal', $order->getMeal());
-        $statement->bindParam(':condiments', $order->getCondiments());
-
-        //4. Execute the query
-        $statement->execute();
-
-        //5. Process the results (get the primary key)
-        $id = $this->_dbh->lastInsertId();
-        return $id;
-
-    }
-
-    //TODO: Add docblock
-    function getOrders()
-    {
-        //1. Define the query
-        $sql = "SELECT * FROM diner_order";
-
-        //2. Prepare the statement
-        $statement = $this->_dbh->prepare($sql);
-
-        //3. Bind the parameters
-
-        //4. Execute the query
-        $statement->execute();
-
-        //5. Process the results (get the primary key)
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-
-    /**
-     * Return an array of condiments
-     * @return string[]
-     */
-    static function getCondiments()
-    {
-        return array('mayonnaise', 'mustard', 'ketchup', 'salsa', 'kim chi', 'sriracha');
+        return $this->_fname;
     }
 
     /**
-     * Return an array of meal options
-     * @return string[]
+     * @param string $fname
      */
-    static function getMeals()
+    public function setFname($fname)
     {
-        return array('breakfast', 'lunch', 'dinner');
+        $this->_fname = $fname;
     }
+
+    /**
+     * @return string
+     */
+    public function getLname()
+    {
+        return $this->_lname;
+    }
+
+    /**
+     * @param string $lname
+     */
+    public function setLname($lname)
+    {
+        $this->_lname = $lname;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAge()
+    {
+        return $this->_age;
+    }
+
+    /**
+     * @param int $age
+     */
+    public function setAge($age)
+    {
+        $this->_age = $age;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->_gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->_gender = $gender;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->_phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->_phone = $phone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->_email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->_email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->_state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState($state)
+    {
+        $this->_state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeeking()
+    {
+        return $this->_seeking;
+    }
+
+    /**
+     * @param string $seeking
+     */
+    public function setSeeking($seeking)
+    {
+        $this->_seeking = $seeking;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBio()
+    {
+        return $this->_bio;
+    }
+
+    /**
+     * @param string $bio
+     */
+    public function setBio($bio)
+    {
+        $this->_bio = $bio;
+    }
+
+
+
+
 }

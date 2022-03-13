@@ -141,8 +141,7 @@ class Controller
 
     function interests()
     {
-        $outdoorInterests = "";
-        $indoorInterests = "";
+
         //get interests from the model and add to F3 hive
         $this->_f3->set('indoor', DataLayer::getIndoor());
         $this->_f3->set('outdoor', DataLayer::getOutdoor());
@@ -153,23 +152,33 @@ class Controller
             if(isset($_POST['indoor'])){
                 $indoorInterests = $_POST['indoor'];
                 if(Validator::validIndoor($indoorInterests)){
-                    $_SESSION['indoor'] = implode(", ", $_POST['indoor']);
+                    $indoorInterests = implode(", ", $_POST['indoor']);
+                    //$_SESSION['member']->setInDoorInterests($indoorInterests);
+                }
+                else{
+                    $this->_f3->set("errors['indoor']", "Invalid selection");
                 }
             }
             if(isset($_POST['outdoor'])){
                 $outdoorInterests = $_POST['outdoor'];
+
                 if(Validator::validOutdoor($outdoorInterests)){
-                    $_SESSION['outdoor'] = implode(", ", $_POST['outdoor']);
+                    $outdoorInterests = implode(", ", $_POST['outdoor']);
+                    //$_SESSION['member']->setOutdoorInterests($outdoorInterests);
+                }
+                else{
+                    $this->_f3->set("errors['outdoor']", "Invalid selection");
                 }
             }
+
             //redirect user to next page
             if(empty($this->_f3->get('errors'))){
-                if(!empty($_SESSION['indoor'])){
-                    $_SESSION['member']->setInDoorInterests($indoorInterests);
+                if(!empty($_POST['indoor'])){
+                    $_SESSION['member']->setInDoorInterests(implode(", " , $indoorInterests));
                 }
 
-                if(!empty($_SESSION['outdoor'])){
-                    $_SESSION['member']->setOutdoorInterests($outdoorInterests);
+                if(!empty($_POST['outdoor'])){
+                    $_SESSION['member']->setOutdoorInterests(implode(", " , $outdoorInterests));
                 }
 
                 $this->_f3->reroute('summary');
@@ -184,6 +193,12 @@ class Controller
     {
         //TODO: Send data to the model
         $GLOBALS['dataLayer']->insertMember($_SESSION['member']);
+        if($_SESSION['member'] instanceof PremiumMember){
+            $this->_f3->set('accountPremium', true);
+        }
+        else{
+            $this->_f3->set('accountPremium', false);
+        }
         $view = new Template();
         echo $view->render('views/profile-summary.html');
 
