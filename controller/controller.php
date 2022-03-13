@@ -11,8 +11,6 @@ class Controller
 
     function home()
     {
-        //echo "<h1>My Diner</h1>";
-
         $view = new Template();
         echo $view->render('views/home.html');
     }
@@ -184,7 +182,8 @@ class Controller
 
     function summary()
     {
-        //$GLOBALS['dataLayer']->saveMember($_SESSION['member']);
+        //TODO: Send data to the model
+        $GLOBALS['dataLayer']->insertMember($_SESSION['member']);
         $view = new Template();
         echo $view->render('views/profile-summary.html');
 

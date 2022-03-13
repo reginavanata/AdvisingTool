@@ -8,9 +8,6 @@ ob_start();
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
 
-
-//var_dump($_SESSION);
-
 //require the autoload file
 require_once ('vendor/autoload.php');
 

@@ -1,4 +1,6 @@
 <?php
+//require the database credentials
+require_once $_SERVER['DOCUMENT_ROOT'].'/../pdo-dating-config.php';
 
 class DataLayer
 {
@@ -19,10 +21,10 @@ class DataLayer
         }
     }
 
-    function insertMember()
+    function insertMember($member)
     {
 //define the query
-        $sql = "INSERT INTO `member` (fname, lname, age, gender, phone, email, state, seeking, bio)
+        $sql = "INSERT INTO member (fname, lname, age, gender, phone, email, state, seeking, bio)
                 VALUES (:fname, :lname, :age, :gender, :phone, :email, :state, :seeking, :bio)";
 
         //prepare the statement
@@ -30,8 +32,14 @@ class DataLayer
 
         //bind the parameters
         $statement->bindParam(':fname', $member->getFname());
-        $statement->bindParam(':meal', $order->getMeal());
-        $statement->bindParam(':condiments', $order->getCondiments());
+        $statement->bindParam(':lname', $member->getLname());
+        $statement->bindParam(':age', $member->getAge());
+        $statement->bindParam(':gender', $member->getGender());
+        $statement->bindParam(':phone', $member->getPhone());
+        $statement->bindParam(':email', $member->getEmail());
+        $statement->bindParam(':state', $member->getState());
+        $statement->bindParam(':seeking', $member->getSeeking());
+        $statement->bindParam(':bio', $member->getBio());
 
         //execute the query
         $statement->execute();
@@ -43,7 +51,20 @@ class DataLayer
 
     function getMembers()
     {
+        //1. Define the query
+        $sql = "SELECT * FROM member";
 
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameters
+
+        //4. Execute the query
+        $statement->execute();
+
+        //5. Process the results (get the primary key)
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     function getMember($member_id)
