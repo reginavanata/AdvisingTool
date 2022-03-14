@@ -139,18 +139,20 @@ class Controller
 
     }
 
-    function interests()
+    /*function interests()
     {
 
         //get interests from the model and add to F3 hive
         $this->_f3->set('indoor', DataLayer::getIndoor());
         $this->_f3->set('outdoor', DataLayer::getOutdoor());
+        print_r($this->_f3->get('errors'));
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-
+            $indoorInterests = $_POST['indoor'];
+            $outdoorInterests = $_POST['outdoor'];
             //add the data to the session variable
             if(isset($_POST['indoor'])){
-                $indoorInterests = $_POST['indoor'];
+
                 if(Validator::validIndoor($indoorInterests)){
                     $indoorInterests = implode(", ", $_POST['indoor']);
                     //$_SESSION['member']->setInDoorInterests($indoorInterests);
@@ -160,7 +162,7 @@ class Controller
                 }
             }
             if(isset($_POST['outdoor'])){
-                $outdoorInterests = $_POST['outdoor'];
+
 
                 if(Validator::validOutdoor($outdoorInterests)){
                     $outdoorInterests = implode(", ", $_POST['outdoor']);
@@ -183,6 +185,59 @@ class Controller
 
                 $this->_f3->reroute('summary');
             }
+        }
+
+        $view = new Template();
+        echo $view->render('views/interests.html');
+    }*/
+    function interests()
+    {
+
+        //get interests from the model and add to F3 hive
+        $this->_f3->set('indoor', DataLayer::getIndoor());
+        $this->_f3->set('outdoor', DataLayer::getOutdoor());
+        //If the form has been posted
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $indoorInterests = $_POST['indoor'];
+            $outdoorInterests = $_POST['outdoor'];
+            //add the data to the session variable
+            if(!empty($_POST['indoor'])){
+
+                if(Validator::validIndoor($indoorInterests)){
+                    $indoorInterests = implode(", ", $_POST['indoor']);
+                    $_SESSION['member']->setInDoorInterests($indoorInterests);
+                }
+                else{
+                    $this->_f3->set("errors['indoor']", "Invalid selection");
+                }
+
+            }
+            if(!empty($_POST['outdoor'])){
+
+
+                if(Validator::validOutdoor($outdoorInterests)){
+                    $outdoorInterests = implode(", ", $_POST['outdoor']);
+                    $_SESSION['member']->setOutdoorInterests($outdoorInterests);
+                }
+                else{
+                    $this->_f3->set("errors['outdoor']", "Invalid selection");
+                }
+            }
+
+            //redirect user to next page
+            if(empty($this->_f3->get('errors'))){
+                if(!empty($_POST['indoor'])){
+                    $_SESSION['member']->setInDoorInterests(implode(", " , $indoorInterests));
+                }
+
+                if(!empty($_POST['outdoor'])){
+                    $_SESSION['member']->setOutdoorInterests(implode(", " , $outdoorInterests));
+                }
+
+
+            }
+            $this->_f3->reroute('summary');
         }
 
         $view = new Template();
