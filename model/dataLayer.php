@@ -94,12 +94,38 @@ class DataLayer
 
     function getMember($member_id)
     {
+        //1. Define the query
+        $sql = "SELECT $member_id FROM member";
 
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameters
+
+        //4. Execute the query
+        $statement->execute();
+
+        //5. Process the results (get the primary key)
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     function getInterests($member_id)
     {
+        //1. Define the query
+        $sql = "SELECT interests FROM member WHERE $member_id";
 
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameters
+
+        //4. Execute the query
+        $statement->execute();
+
+        //5. Process the results (get the primary key)
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     static function getGender()

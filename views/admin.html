@@ -21,7 +21,7 @@
             <td>Bio</td>
             <td>Premium</td>
             <td>Interests</td>
-            <td>Date & Time Created</td>
+            <td>Date Created</td>
         </tr>
         </thead>
         <tbody>
@@ -47,7 +47,6 @@
                     </false>
 
                 </check>
-
                 <td>{{ @member['interests'] }}</td>
                 <td>{{ date('m-d-y', strtotime(@member['creation_date'])) }}</td>
             </tr>
