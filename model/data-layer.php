@@ -32,14 +32,10 @@ class DataLayer
 
         //bind the parameters
         $statement->bindParam(':user_id', $advisee->getUserId());
-        $statement->bindParam(':lname', $member->getLname());
-        $statement->bindParam(':age', $member->getAge());
-        $statement->bindParam(':gender', $member->getGender());
-        $statement->bindParam(':phone', $member->getPhone());
-        $statement->bindParam(':email', $member->getEmail());
-        $statement->bindParam(':state', $member->getState());
-        $statement->bindParam(':seeking', $member->getSeeking());
-        $statement->bindParam(':bio', $member->getBio());
+        $statement->bindParam(':fall', $advisee->getFall());
+        $statement->bindParam(':winter', $advisee->getWinter());
+        $statement->bindParam(':spring', $advisee->getSpring());
+        $statement->bindParam(':summer', $advisee->getSummer());
 
         //execute the query
         $statement->execute();
@@ -49,10 +45,10 @@ class DataLayer
         return $id;
     }
 
-    function getMembers()
+    function getPlans()
     {
         //1. Define the query
-        $sql = "SELECT * FROM member";
+        $sql = "SELECT * FROM advising_plans";
 
         //2. Prepare the statement
         $statement = $this->_dbh->prepare($sql);
@@ -67,30 +63,22 @@ class DataLayer
         return $result;
     }
 
-    function getMember($member_id)
+    function getPlan($user_id)
     {
+        //1. Define the query
+        $sql = "SELECT $user_id FROM advising_plans";
 
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameters
+
+        //4. Execute the query
+        $statement->execute();
+
+        //5. Process the results (get the primary key)
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
-    function getInterests($member_id)
-    {
-
-    }
-
-    static function getGender()
-    {
-        return array('female', 'non-binary', 'male');
-    }
-
-    static function getIndoor()
-    {
-        return array('TV', 'Movies', 'Cooking', 'Cooking', 'Board Games', 'Puzzles',
-            'Reading', 'Playing Cards', 'Video Games');
-    }
-
-    static function getOutdoor()
-    {
-        return array('Camping', 'Kayaking', 'Rock Climbing', 'Hiking', 'Surfing',
-            'Snowboarding', 'Swimming');
-    }
 }
