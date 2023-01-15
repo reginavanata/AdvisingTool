@@ -5,7 +5,8 @@
 ob_start();
 
 //turn on error reporting
-ini_set("display_errors", 1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 //require the autoload file
@@ -15,7 +16,7 @@ session_start();
 
 
 var_dump($_SESSION);
-//var_dump($_POST);
+var_dump($_POST);
 
 //create instance of Base class
 $f3 = Base::instance();

@@ -306,19 +306,25 @@ class Controller
     function retrievePlan()    {
 
         //If the form has been posted
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-            $planIdentifier = '666666';
-            $fallClasses = $_POST['fallClasses'];
-            $winterClasses = $_POST['winterClasses'];
-            $springClasses = $_POST['springClasses'];
-            $summerClasses = $_POST['summerClasses'];
+            //Show filename, but cut off file extension for ".php" files
+            $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+            $lastUriSegment = array_pop($uriSegments);
+
+            $adviseeArray = $GLOBALS['dataLayer']->getPlan($lastUriSegment);
+
+//            $planIdentifier = '666666';
+//            $fallClasses = $_POST['fallClasses'];
+//            $winterClasses = $_POST['winterClasses'];
+//            $springClasses = $_POST['springClasses'];
+//            $summerClasses = $_POST['summerClasses'];
 
 
-            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+            $_SESSION['retrievedAdvisee'] = new Advisee($adviseeArray[0], $adviseeArray[1], $adviseeArray[2], $adviseeArray[3], $adviseeArray[4]);
 
-            $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
-            session_destroy();
+//            $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
+//            session_destroy();
         }
     }
 
