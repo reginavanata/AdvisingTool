@@ -67,7 +67,7 @@ $f3->route('POST /newplan', function($f3) {
 });
 
 //define a personal-information route
-$f3->route('GET /savedplans', function($f3) {
+$f3->route('GET /savedplan*', function($f3) {
     $GLOBALS['con']->retrievePlan();
 });
 

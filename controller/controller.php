@@ -305,12 +305,14 @@ class Controller
 
     function retrievePlan()    {
         //If the form has been posted
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-            $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-            $adviseeID = array_pop($uriSegments);
+            $urlID = substr($_SERVER['REQUEST_URI'], -6);
 
-            $retrievedPlanArray =  $GLOBALS['dataLayer']->getPlan($adviseeID);
+            $retrievedPlanArray =  $GLOBALS['dataLayer']->getPlan($urlID);
+
+            echo "URL Substring: " .$urlID;
+            echo "\n\nretrieved plan:  \n" .$retrievedPlanArray["user_id"][0];
 
 //            $planIdentifier = '666666';
 //            $fallClasses = $_POST['fallClasses'];
@@ -318,8 +320,17 @@ class Controller
 //            $springClasses = $_POST['springClasses'];
 //            $summerClasses = $_POST['summerClasses'];
 
+//            echo "Advisee Arr 0" .$retrievedPlanArray[0];
 
-            $_SESSION['retrievedPlan'] = new Advisee($retrievedPlanArray[0], $retrievedPlanArray[1], $retrievedPlanArray[2], $retrievedPlanArray[3], $retrievedPlanArray[4]);
+            $_SESSION['retrievedPlan'] = $retrievedPlanArray;
+//            printf ("%s (%s)\n", $retrievedPlanArray["user_id"], $retrievedPlanArray["winter"]);
+
+
+//            $_SESSION['retrievedPlan'] = new Advisee($retrievedPlanArray[0], $retrievedPlanArray[1], $retrievedPlanArray[2], $retrievedPlanArray[3], $retrievedPlanArray[4]);
+//            session_destroy();
+
+            $view = new Template();
+            echo $view->render('views/retrieved-plan.html');
         }
     }
 
