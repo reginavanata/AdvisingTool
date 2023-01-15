@@ -60,6 +60,11 @@ $f3->route('GET|POST /newplan', function($f3) {
     $GLOBALS['con']->newPlan();
 });
 
+//define a personal-information route
+$f3->route('GET|POST /newplan', function($f3) {
+    $GLOBALS['con']->newPlan();
+});
+
 
 //run fat-free
 $f3->run();

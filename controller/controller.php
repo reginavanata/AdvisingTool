@@ -283,4 +283,21 @@ class Controller
         echo $view->render('views/blank-plan.html');
     }
 
+    function savePlan()
+    {
+
+        //If the form has been posted
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $planIdentifier = $_POST['planIdentifier'];
+            $fallClasses = $_POST['fallClasses'];
+            $winterClasses = $_POST['winterClasses'];
+            $springClasses = $_POST['springClasses'];
+            $summerClasses = $_POST['summerClasses'];
+
+
+            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+
+        }
+    }
 }
