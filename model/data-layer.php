@@ -72,21 +72,23 @@ class DataLayer
     /*
      * Returns the academic plan for the given user_id
      * */
-    function getPlan($user_id)
+    function getPlan($advisee)
     {
         //1. Define the query
-        $sql = "SELECT $user_id FROM advising_plans";
+        $sql = "SELECT * FROM advising_plans
+                WHERE `user_id` = :user_id";
 
         //2. Prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //3. Bind the parameters
-
+        $statement->bindParam(':user_id', $advisee->getUserId());
         //4. Execute the query
         $statement->execute();
 
         //5. Process the results (get the primary key)
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         return $result;
     }
 
