@@ -304,22 +304,22 @@ class Controller
     }
 
     function retrievePlan()    {
-
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $planIdentifier = '666666';
-            $fallClasses = $_POST['fallClasses'];
-            $winterClasses = $_POST['winterClasses'];
-            $springClasses = $_POST['springClasses'];
-            $summerClasses = $_POST['summerClasses'];
+            $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+            $adviseeID = array_pop($uriSegments);
 
-            $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
-            session_destroy();
+            $retrievedPlanArray =  $GLOBALS['dataLayer']->getPlan($adviseeID);
 
-            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+//            $planIdentifier = '666666';
+//            $fallClasses = $_POST['fallClasses'];
+//            $winterClasses = $_POST['winterClasses'];
+//            $springClasses = $_POST['springClasses'];
+//            $summerClasses = $_POST['summerClasses'];
 
 
+            $_SESSION['retrievedPlan'] = new Advisee($retrievedPlanArray[0], $retrievedPlanArray[1], $retrievedPlanArray[2], $retrievedPlanArray[3], $retrievedPlanArray[4]);
         }
     }
 
