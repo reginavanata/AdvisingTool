@@ -302,4 +302,25 @@ class Controller
             session_destroy();
         }
     }
+
+    function retrievePlan()    {
+
+        //If the form has been posted
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $planIdentifier = '666666';
+            $fallClasses = $_POST['fallClasses'];
+            $winterClasses = $_POST['winterClasses'];
+            $springClasses = $_POST['springClasses'];
+            $summerClasses = $_POST['summerClasses'];
+
+
+            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+
+            $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
+            session_destroy();
+        }
+    }
+
+
 }
