@@ -72,17 +72,17 @@ class DataLayer
     /*
      * Returns the academic plan for the given user_id
      * */
-    function getPlan($advisee)
+    function getPlan($user_id)
     {
         //1. Define the query
         $sql = "SELECT * FROM advising_plans
-                WHERE `user_id` = :user_id";
+                WHERE user_id = $user_id";
 
         //2. Prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //3. Bind the parameters
-        $statement->bindParam(':user_id', $advisee->getUserId());
+        //$statement->bindParam(':user_id', $advisee->getUserId());
         //4. Execute the query
         $statement->execute();
 
