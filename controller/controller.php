@@ -298,6 +298,7 @@ class Controller
 
             $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
 
+            $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
         }
     }
 }

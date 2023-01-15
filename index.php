@@ -56,13 +56,13 @@ $f3->route('GET /admin', function() {
 });
 
 //define a personal-information route
-$f3->route('GET|POST /newplan', function($f3) {
+$f3->route('GET /newplan', function($f3) {
     $GLOBALS['con']->newPlan();
 });
 
 //define a personal-information route
-$f3->route('GET|POST /newplan', function($f3) {
-    $GLOBALS['con']->newPlan();
+$f3->route('POST /newplan', function($f3) {
+    $GLOBALS['con']->savePlan();
 });
 
 
