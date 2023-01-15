@@ -13,7 +13,7 @@ class DataLayer
     {
         try{
             //instantiate a PDO object
-            $this->_dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            $this->_dbh = new PDO(DB_DSN_1, DB_USERNAME, DB_PASSWORD);
             echo "Yay!";
         }
         catch(PDOException $e){
@@ -21,17 +21,17 @@ class DataLayer
         }
     }
 
-    function insertMember($member)
+    function insertPlan($advisee)
     {
 //define the query
-        $sql = "INSERT INTO member (fname, lname, age, gender, phone, email, state, seeking, bio)
-                VALUES (:fname, :lname, :age, :gender, :phone, :email, :state, :seeking, :bio)";
+        $sql = "INSERT INTO advising_plans (user_id, fall, winter, spring, summer)
+                VALUES (:user_id, :fall, :winter, :spring, :summer)";
 
         //prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //bind the parameters
-        $statement->bindParam(':fname', $member->getFname());
+        $statement->bindParam(':user_id', $advisee->getUserId());
         $statement->bindParam(':lname', $member->getLname());
         $statement->bindParam(':age', $member->getAge());
         $statement->bindParam(':gender', $member->getGender());
