@@ -21,9 +21,12 @@ class DataLayer
         }
     }
 
+    /*
+     * Inserts a new academic plan to the database
+     * */
     function insertPlan($advisee)
     {
-//define the query
+        //define the query
         $sql = "INSERT INTO advising_plans (user_id, fall, winter, spring, summer)
                 VALUES (:user_id, :fall, :winter, :spring, :summer)";
 
@@ -45,6 +48,9 @@ class DataLayer
         return $id;
     }
 
+    /*
+     * returns all academic plans in the database
+     * */
     function getPlans()
     {
         //1. Define the query
@@ -63,6 +69,9 @@ class DataLayer
         return $result;
     }
 
+    /*
+     * Returns the academic plan for the given user_id
+     * */
     function getPlan($user_id)
     {
         //1. Define the query
@@ -79,6 +88,28 @@ class DataLayer
         //5. Process the results (get the primary key)
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    function updatePlan($user_id)
+    {
+        //define the query
+        $sql = 'UPDATE advising_plans SET
+                (fall, winter, spring, summer)
+                VALUES (:fall, :winter, :spring, :summer
+                WHERE (user_id) = VALUES :user_id';
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the parameters
+        $statement->bindParam(':user_id', $user_id->getUserId());
+        $statement->bindParam(':fall', $user_id->getFall());
+        $statement->bindParam(':winter', $user_id->getWinter());
+        $statement->bindParam(':spring', $user_id->getSpring());
+        $statement->bindParam(':summer', $user_id->getSummer());
+
+        //execute the query
+        $statement->execute();
     }
 
 }
