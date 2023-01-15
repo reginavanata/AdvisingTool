@@ -1,6 +1,6 @@
 <?php
 //require the database credentials
-require_once $_SERVER['DOCUMENT_ROOT'].'/../pdo-dating-config.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/../db-creds.php';
 
 class DataLayer
 {
