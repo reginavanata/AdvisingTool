@@ -55,7 +55,7 @@ $f3->route('GET /admin', function() {
     $GLOBALS['con']->admin();
 });
 
-//define a personal-information route
+//define a new pan route
 $f3->route('GET /newplan', function($f3) {
     $GLOBALS['con']->newPlan();
 });
@@ -63,6 +63,11 @@ $f3->route('GET /newplan', function($f3) {
 //define a personal-information route
 $f3->route('POST /newplan', function($f3) {
     $GLOBALS['con']->savePlan();
+});
+
+//define a personal-information route
+$f3->route('GET /savedplans', function($f3) {
+    $GLOBALS['con']->retrievePlan();
 });
 
 
