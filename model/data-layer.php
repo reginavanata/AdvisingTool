@@ -76,13 +76,15 @@ class DataLayer
     {
         //1. Define the query
         $sql = "SELECT * FROM advising_plans
-                WHERE user_id = $user_id";
+                WHERE user_id = :user_id";
 
         //2. Prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //3. Bind the parameters
-        //$statement->bindParam(':user_id', $advisee->getUserId());
+
+
+        $statement->bindParam(':user_id', $user_id);
         //4. Execute the query
         $statement->execute();
 
@@ -99,20 +101,18 @@ class DataLayer
     function updatePlan($user_id, $fall, $winter, $spring, $summer)
     {
         //define the query
-        $sql = 'UPDATE advising_plans SET
-                (fall, winter, spring, summer, last_updated)
-                VALUES (:fall, :winter, :spring, :summer, CURRENT_TIMESTAMP
-                WHERE (user_id) = VALUES :user_id';
+        $sql = 'UPDATE advising_plans SET fall = :fall, winter = :winter, spring = :spring, summer = :summer, last_updated = CURRENT_TIMESTAMP
+                WHERE user_id = :user_id';
 
         //prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //bind the parameters
-        $statement->bindParam(':user_id', $user_id->getUserId());
-        $statement->bindParam(':fall', $fall->getFall());
-        $statement->bindParam(':winter', $winter->getWinter());
-        $statement->bindParam(':spring', $spring->getSpring());
-        $statement->bindParam(':summer', $summer->getSummer());
+        $statement->bindParam(':user_id', $user_id);
+        $statement->bindParam(':fall', $fall);
+        $statement->bindParam(':winter', $winter);
+        $statement->bindParam(':spring', $spring);
+        $statement->bindParam(':summer', $summer);
 
         //execute the query
         $statement->execute();
