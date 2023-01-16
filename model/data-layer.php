@@ -96,12 +96,12 @@ class DataLayer
      * Update plan for the given user_id
      * all fields will be updated
      * */
-    function updatePlan($user_id)
+    function updatePlan($user_id, $fall, $winter, $spring, $summer)
     {
         //define the query
         $sql = 'UPDATE advising_plans SET
                 (fall, winter, spring, summer, last_updated)
-                VALUES (:fall, :winter, :spring, :summer, CURRENT_TIMESTAMP)
+                VALUES (:fall, :winter, :spring, :summer, CURRENT_TIMESTAMP
                 WHERE (user_id) = VALUES :user_id';
 
         //prepare the statement
@@ -109,10 +109,10 @@ class DataLayer
 
         //bind the parameters
         $statement->bindParam(':user_id', $user_id->getUserId());
-        $statement->bindParam(':fall', $user_id->getFall());
-        $statement->bindParam(':winter', $user_id->getWinter());
-        $statement->bindParam(':spring', $user_id->getSpring());
-        $statement->bindParam(':summer', $user_id->getSummer());
+        $statement->bindParam(':fall', $fall->getFall());
+        $statement->bindParam(':winter', $winter->getWinter());
+        $statement->bindParam(':spring', $spring->getSpring());
+        $statement->bindParam(':summer', $summer->getSummer());
 
         //execute the query
         $statement->execute();
