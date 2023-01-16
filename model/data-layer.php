@@ -135,12 +135,13 @@ class DataLayer
     function getLastUpdated($user_id)
     {
         //define the query
-        $sql = 'SELECT last_updated FROM advising_plans WHERE user_id = $user_id';
+        $sql = 'SELECT last_updated FROM advising_plans WHERE user_id = :user_id';
 
         //prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //bind the params
+        $statement->bindParam(':user_id', $user_id);
 
         //execute the query
         $statement->execute();
