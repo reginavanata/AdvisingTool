@@ -289,7 +289,7 @@ class Controller
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $planIdentifier = '666666';
+            $planIdentifier = '111116';
             $fallClasses = $_POST['fallClasses'];
             $winterClasses = $_POST['winterClasses'];
             $springClasses = $_POST['springClasses'];
@@ -300,6 +300,7 @@ class Controller
 
             $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
             session_destroy();
+            header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan".$planIdentifier);
         }
     }
 
@@ -309,17 +310,23 @@ class Controller
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $planIdentifier = '666666';
+            $planIdentifier = '111116';
             $fallClasses = $_POST['fallClasses'];
             $winterClasses = $_POST['winterClasses'];
             $springClasses = $_POST['springClasses'];
             $summerClasses = $_POST['summerClasses'];
 
+            echo "Fall Classes: " .$fallClasses;
+            echo "Winter Classes: " .$winterClasses;
+            echo "Spring Classes: " .$springClasses;
+            echo "Summer Classes: " .$summerClasses;
 
-            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+//            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
 
-            $GLOBALS['dataLayer']->updatePlan($_SESSION['advisee']);
-            session_destroy();
+            $GLOBALS['dataLayer']->updatePlan($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+            $urlID = substr($_SERVER['REQUEST_URI'], -6);
+//            session_destroy();
+            header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$urlID);
         }
     }
 
