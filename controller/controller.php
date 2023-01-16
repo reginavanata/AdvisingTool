@@ -17,8 +17,11 @@ class Controller
 
     function home()
     {
+        //Clear the session data
+
         $view = new Template();
         echo $view->render('views/advising-home.html');
+        session_destroy();
     }
 
     function personal()
@@ -279,6 +282,18 @@ class Controller
 
     function newPlan()
     {
+
+        $n = 3;
+        $result = bin2hex(random_bytes($n));
+        echo " ".$result;
+        //random 6-digit code here
+        //perform 6-digit check here
+
+
+        $_SESSION['newSixDigits'] = $result;
+
+
+
         $view = new Template();
         echo $view->render('views/blank-plan.html');
     }
@@ -289,7 +304,7 @@ class Controller
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $planIdentifier = '111116';
+            $planIdentifier = $_SESSION['newSixDigits'];
             $fallClasses = $_POST['fallClasses'];
             $winterClasses = $_POST['winterClasses'];
             $springClasses = $_POST['springClasses'];
@@ -300,7 +315,7 @@ class Controller
 
             $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
             session_destroy();
-            header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan".$planIdentifier);
+            header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$planIdentifier);
         }
     }
 
@@ -309,8 +324,8 @@ class Controller
 
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $planIdentifier = '111116';
+            $urlID = substr($_SERVER['REQUEST_URI'], -6);
+            $planIdentifier = $_SESSION['newSixDigits'];
             $fallClasses = $_POST['fallClasses'];
             $winterClasses = $_POST['winterClasses'];
             $springClasses = $_POST['springClasses'];
@@ -323,14 +338,17 @@ class Controller
 
 //            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
 
-            $GLOBALS['dataLayer']->updatePlan($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
-            $urlID = substr($_SERVER['REQUEST_URI'], -6);
+            $GLOBALS['dataLayer']->updatePlan($urlID, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+
 //            session_destroy();
             header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$urlID);
         }
     }
 
     function retrievePlan()    {
+
+        //if identifier doesn't exist, redirect to homepage
+
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
@@ -356,6 +374,7 @@ class Controller
 //            $_SESSION['retrievedPlan'] = new Advisee($retrievedPlanArray[0], $retrievedPlanArray[1], $retrievedPlanArray[2], $retrievedPlanArray[3], $retrievedPlanArray[4]);
 //            session_destroy();
 
+//            header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$urlID);
             $view = new Template();
             echo $view->render('views/retrieved-plan.html');
         }

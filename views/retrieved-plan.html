@@ -7,7 +7,7 @@
   <title>HTML 5 Boilerplate</title>
 </head>
 <body>
-<h1>Advise-It Blank Plan</h1>
+<h1>Advise-It Retrieved Plan</h1>
 
 <p>ID: {{@SESSION.retrievedPlan[0]['user_id']}}</p>
 
@@ -15,24 +15,16 @@
 <form action="#" method="post">
 
   <label for="fallClasses">Fall Quarter 2022</label>
-  <textarea id="fallClasses" name="fallClasses" rows="5" cols="33">
-  {{@SESSION.retrievedPlan[0]['fall']}}
-  </textarea>
+  <textarea id="fallClasses" name="fallClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['fall']}}</textarea>
 
   <label for="winterClasses">Winter Quarter 2022</label>
-  <textarea id="winterClasses" name="winterClasses" rows="5" cols="33">
-  {{@SESSION.retrievedPlan[0]['winter']}}
-  </textarea>
+  <textarea id="winterClasses" name="winterClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['winter']}}</textarea>
 
   <label for="springClasses">Spring Quarter 2023</label>
-  <textarea id="springClasses" name="springClasses" rows="5" cols="33">
-  {{@SESSION.retrievedPlan[0]['spring']}}
-  </textarea>
+  <textarea id="springClasses" name="springClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['spring']}}</textarea>
 
   <label for="summerClasses">Summer Quarter 2023</label>
-  <textarea id="summerClasses" name="summerClasses" rows="5" cols="33">
-  {{@SESSION.retrievedPlan[0]['summer']}}
-  </textarea>
+  <textarea id="summerClasses" name="summerClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['summer']}}</textarea>
 
   <button type="submit">Save Plan</button>
 </form>
