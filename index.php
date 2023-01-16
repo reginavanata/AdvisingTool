@@ -66,15 +66,17 @@ $f3->route('POST /newplan', function($f3) {
     $GLOBALS['con']->savePlan();
 });
 
+//Routing for saving from an existing plan
+$f3->route('POST /savedplan*', function($f3) {
+    $GLOBALS['con']->updateExistingPlan();
+});
+
 //Routing for retrieval of a saved plan
 $f3->route('GET /savedplan*', function($f3) {
     $GLOBALS['con']->retrievePlan();
 });
 
-//Routing for saving from an existing plan
-$f3->route('POST /savedplan*', function($f3) {
-    $GLOBALS['con']->updateExistingPlan();
-});
+
 
 //run fat-free
 $f3->run();
