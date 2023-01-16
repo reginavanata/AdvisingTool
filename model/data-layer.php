@@ -92,21 +92,55 @@ class DataLayer
         return $result;
     }
 
-    function updatePlan($userID,$fallClasses,$winterClasses,$springClasses,$summerClasses)
+    /*
+     * Update plan for the given user_id
+     * all fields will be updated
+     * */
+    function updatePlan($user_id)
     {
         //define the query
-        $sql = 'UPDATE advising_plans SET fall = :fall, winter = :winter, spring = :spring, summer = :summer
-                WHERE user_id = :user_id';
+        $sql = 'UPDATE advising_plans SET
+                (fall, winter, spring, summer, last_updated)
+                VALUES (:fall, :winter, :spring, :summer, CURRENT_TIMESTAMP)
+                WHERE (user_id) = VALUES :user_id';
 
         //prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //bind the parameters
-        $statement->bindParam(':user_id', $userID);
-        $statement->bindParam(':fall', $fallClasses);
-        $statement->bindParam(':winter', $winterClasses);
-        $statement->bindParam(':spring', $springClasses);
-        $statement->bindParam(':summer', $summerClasses);
+        $statement->bindParam(':user_id', $user_id->getUserId());
+        $statement->bindParam(':fall', $user_id->getFall());
+        $statement->bindParam(':winter', $user_id->getWinter());
+        $statement->bindParam(':spring', $user_id->getSpring());
+        $statement->bindParam(':summer', $user_id->getSummer());
+
+        //execute the query
+        $statement->execute();
+    }
+
+    function getUsers()
+    {
+        //define the query
+        $sql = 'SELECT user_id FROM advising_plans';
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the params
+
+        //execute the query
+        $statement->execute();
+    }
+
+    function getLastUpdated($user_id)
+    {
+        //define the query
+        $sql = 'SELECT last_updated FROM advising_plans WHERE user_id = $user_id';
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the params
 
         //execute the query
         $statement->execute();
