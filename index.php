@@ -29,33 +29,6 @@ $f3->route('GET /', function() {
 
 });
 
-//define a personal-information route
-$f3->route('GET|POST /personal', function($f3) {
-    $GLOBALS['con']->personal();
-});
-
-//define a profile route
-$f3->route('GET|POST /profile', function($f3) {
-    $GLOBALS['con']->profile();
-});
-
-//define a interests route
-$f3->route('GET|POST /interests', function($f3) {
-    $GLOBALS['con']->interests();
-
-});
-
-//Define a summary route
-$f3->route('GET /summary', function() {
-    $GLOBALS['con']->summary();
-});
-
-//Define an admin route
-$f3->route('GET /admin', function() {
-
-    $GLOBALS['con']->admin();
-});
-
 //Routing to a new plan
 $f3->route('GET /newplan', function($f3) {
     $GLOBALS['con']->newPlan();
