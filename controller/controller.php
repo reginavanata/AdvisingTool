@@ -280,17 +280,52 @@ class Controller
         echo $view->render('views/admin.html');
     }
 
+    function generateIdentifier(): string
+    {
+        $n = 3;
+        return bin2hex(random_bytes($n));
+    }
+
+    function generateUniqueIdentifier(): string
+    {
+
+        $allIdentifiers = $GLOBALS['dataLayer']->getAllIdentifiers();
+
+        $potentialIdentifier = null;
+        $idIsUnique = false;
+
+        while ($idIsUnique == false) {
+            $potentialIdentifier = $this->generateIdentifier();
+            //see if ID is in DB already
+            foreach ($allIdentifiers as $id) {
+                if ($id == $potentialIdentifier) {
+                    $idIsUnique = false;
+                    break;
+                }
+                $idIsUnique = true;
+            }
+        }
+
+        return $potentialIdentifier;
+    }
+
     function newPlan()
     {
 
-        $n = 3;
-        $result = bin2hex(random_bytes($n));
-        echo " ".$result;
+
+//        $n = 3;
+//        $potentialID = bin2hex(random_bytes($n));
+//        echo "Potential ID: ".$potentialID;
         //random 6-digit code here
         //perform 6-digit check here
 
+//        $potentialID = $this->generateIdentifier();
 
-        $_SESSION['newSixDigits'] = $result;
+
+        //retrieve all IDs
+//        $allIdentifiers = $GLOBALS['dataLayer']->getAllIdentifiers();
+
+        $_SESSION['newSixDigits'] = $this->generateUniqueIdentifier();
 
 
 

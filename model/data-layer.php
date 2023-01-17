@@ -152,4 +152,25 @@ class DataLayer
         return $result;
     }
 
+
+    function getAllIdentifiers()
+    {
+        //define the query
+        $sql = 'SELECT user_id FROM advising_plans';
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the params
+//        $statement->bindParam(':user_id', $user_id);
+
+        //execute the query
+        $statement->execute();
+
+        //5. Process the results (get the primary key)
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
 }
