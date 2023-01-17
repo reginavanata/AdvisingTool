@@ -145,6 +145,11 @@ class DataLayer
 
         //execute the query
         $statement->execute();
+
+        //5. Process the results (get the primary key)
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 
 }

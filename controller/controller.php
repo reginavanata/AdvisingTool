@@ -356,6 +356,8 @@ class Controller
 
             $retrievedPlanArray =  $GLOBALS['dataLayer']->getPlan($urlID);
 
+            $lastUpdated =  $GLOBALS['dataLayer']->getLastUpdated($urlID);
+
             echo "URL Substring: " .$urlID;
             echo "\n\nretrieved plan:  \n" .$retrievedPlanArray["user_id"][0];
 
@@ -368,6 +370,7 @@ class Controller
 //            echo "Advisee Arr 0" .$retrievedPlanArray[0];
 
             $_SESSION['retrievedPlan'] = $retrievedPlanArray;
+            $_SESSION['lastUpdated'] = $lastUpdated[0]['last_updated'];
 //            printf ("%s (%s)\n", $retrievedPlanArray["user_id"], $retrievedPlanArray["winter"]);
 
 
