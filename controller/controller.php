@@ -327,7 +327,7 @@ class Controller
     function newPlan()
     {
 
-
+//testing to see if repos are right
 //        $n = 3;
 //        $potentialID = bin2hex(random_bytes($n));
 //        echo "Potential ID: ".$potentialID;
