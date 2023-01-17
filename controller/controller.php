@@ -309,6 +309,21 @@ class Controller
         return $potentialIdentifier;
     }
 
+    function idInDatabase($passedID): bool {
+
+        $allIdentifiers = $GLOBALS['dataLayer']->getAllIdentifiers();
+
+        $isInDatabase = false;
+
+        foreach ($allIdentifiers as $currentID) {
+            if ($currentID == $passedID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     function newPlan()
     {
 
