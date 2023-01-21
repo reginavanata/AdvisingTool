@@ -109,6 +109,10 @@ class Controller
 
             $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
 
+            /*^in theory, you could post an existing id to this page and wipe the entry for that id, we should prevent
+            insertion with existing IDs here*/
+
+
             $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
             session_destroy();
             header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$planIdentifier);
