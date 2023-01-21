@@ -14,9 +14,11 @@ require_once ('vendor/autoload.php');
 //Start the session
 session_start();
 
-
+/*echo("Session VarDump: ");
 var_dump($_SESSION);
-var_dump($_POST);
+echo("\nPost VarDump: ");
+var_dump($_POST);*/
+
 
 //create instance of Base class
 $f3 = Base::instance();

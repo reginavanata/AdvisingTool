@@ -9,10 +9,16 @@ class Controller
         $this->_f3 = $f3;
     }
 
+    function debug() {
+        //displays session and post variables in a moderately readable way
+        highlight_string("<?php\n\$_SESSION =\n" . var_export($_SESSION, true) . ";?>");
+        highlight_string("<?php\n\$_POST =\n" . var_export($_POST, true) . ";?>");
+/*        highlight_string("<?php\n\$GLOBALS =\n" . var_export($GLOBALS, true) . ";?>");*/
+    }
+
     function home()
     {
         //Clear the session data
-
         $view = new Template();
         echo $view->render('views/advising-home.html');
         session_destroy();
@@ -26,24 +32,31 @@ class Controller
 
     function generateUniqueIdentifier(): string
     {
-
+        echo "generate unique ID func reached";
         $allIdentifiers = $GLOBALS['dataLayer']->getAllIdentifiers();
 
         $potentialIdentifier = null;
         $idIsUnique = false;
 
         while ($idIsUnique == false) {
+            //generate a new potential ID until we confirm uniqueness
             $potentialIdentifier = $this->generateIdentifier();
+
             //see if ID is in DB already
             foreach ($allIdentifiers as $id) {
-                if ($id == $potentialIdentifier) {
-                    $idIsUnique = false;
+
+                //if we find a duplicate, break out of loop to avoid flag being set to true
+                if ($id['user_id'] == $potentialIdentifier) {
+//                    $idIsUnique = false;
+
+                    //if we break, a new ID will be generated
                     break;
                 }
+
+                //if we make it here, we've run out of IDs to check against and know the ID is unique
                 $idIsUnique = true;
             }
         }
-
         return $potentialIdentifier;
     }
 
@@ -51,10 +64,8 @@ class Controller
 
         $allIdentifiers = $GLOBALS['dataLayer']->getAllIdentifiers();
 
-        $isInDatabase = false;
-
         foreach ($allIdentifiers as $currentID) {
-            if ($currentID == $passedID) {
+            if ($currentID['user_id'] == $passedID) {
                 return true;
             }
         }
@@ -78,9 +89,7 @@ class Controller
 //        $allIdentifiers = $GLOBALS['dataLayer']->getAllIdentifiers();
 
         $_SESSION['newSixDigits'] = $this->generateUniqueIdentifier();
-
-
-
+        $this->debug();
         $view = new Template();
         echo $view->render('views/blank-plan.html');
     }
@@ -134,19 +143,28 @@ class Controller
 
     function retrievePlan()    {
 
-        //if identifier doesn't exist, redirect to homepage
-
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
+            //pull off the id from the url
             $urlID = substr($_SERVER['REQUEST_URI'], -6);
 
-            $retrievedPlanArray =  $GLOBALS['dataLayer']->getPlan($urlID);
 
-            $lastUpdated =  $GLOBALS['dataLayer']->getLastUpdated($urlID);
+            //if the provided url is not in the db, reroute to home with header()
+            if(!$this->idInDatabase($urlID)) {
+                header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/");
+            }
+            else {
+                //if it's in the db, continue
 
-            echo "URL Substring: " .$urlID;
-            echo "\n\nretrieved plan:  \n" .$retrievedPlanArray["user_id"][0];
+                //retrieve the information in the DB associated with the supplied ID
+                $retrievedPlanArray =  $GLOBALS['dataLayer']->getPlan($urlID);
+
+                //retrieves the 'last updated' timestamp
+                $lastUpdated =  $GLOBALS['dataLayer']->getLastUpdated($urlID);
+
+//                echo "URL Substring: " .$urlID;
+//                echo "\n\nretrieved plan:  \n" .$retrievedPlanArray["user_id"][0];
 
 //            $planIdentifier = '666666';
 //            $fallClasses = $_POST['fallClasses'];
@@ -156,8 +174,8 @@ class Controller
 
 //            echo "Advisee Arr 0" .$retrievedPlanArray[0];
 
-            $_SESSION['retrievedPlan'] = $retrievedPlanArray;
-            $_SESSION['lastUpdated'] = $lastUpdated[0]['last_updated'];
+                $_SESSION['retrievedPlan'] = $retrievedPlanArray;
+                $_SESSION['lastUpdated'] = $lastUpdated[0]['last_updated'];
 //            printf ("%s (%s)\n", $retrievedPlanArray["user_id"], $retrievedPlanArray["winter"]);
 
 
@@ -165,8 +183,10 @@ class Controller
 //            session_destroy();
 
 //            header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$urlID);
-            $view = new Template();
-            echo $view->render('views/retrieved-plan.html');
+                $view = new Template();
+                echo $view->render('views/retrieved-plan.html');
+            }
+
         }
     }
 
