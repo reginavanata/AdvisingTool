@@ -105,9 +105,10 @@ class Controller
             $winterClasses = $_POST['winterClasses'];
             $springClasses = $_POST['springClasses'];
             $summerClasses = $_POST['summerClasses'];
+            $advisorName = $_POST['advisorName'];
 
 
-            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses, $advisorName);
 
             /*^in theory, you could post an existing id to this page and wipe the entry for that id, we should prevent
             insertion with existing IDs here*/
@@ -130,15 +131,17 @@ class Controller
             $winterClasses = $_POST['winterClasses'];
             $springClasses = $_POST['springClasses'];
             $summerClasses = $_POST['summerClasses'];
+            $advisorName = $_POST['advisorName'];
 
             echo "Fall Classes: " .$fallClasses;
             echo "Winter Classes: " .$winterClasses;
             echo "Spring Classes: " .$springClasses;
             echo "Summer Classes: " .$summerClasses;
+            echo "Advisor Name: " .$advisorName;
 
 //            $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses);
 
-            $GLOBALS['dataLayer']->updatePlan($urlID, $fallClasses, $winterClasses, $springClasses, $summerClasses);
+            $GLOBALS['dataLayer']->updatePlan($urlID, $fallClasses, $winterClasses, $springClasses, $summerClasses, $advisorName);
 
 //            session_destroy();
             header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$urlID);

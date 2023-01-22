@@ -7,6 +7,7 @@ class Advisee
     private $_winter;
     private $_spring;
     private $_summer;
+    private $_advisor;
 
     /**
      * @param $_user_id
@@ -14,14 +15,16 @@ class Advisee
      * @param $_winter
      * @param $_spring
      * @param $_summer
+     * * @param $_advisor
      */
-    public function __construct($_user_id, $_fall, $_winter, $_spring, $_summer)
+    public function __construct($_user_id, $_fall, $_winter, $_spring, $_summer, $_advisor)
     {
         $this->_user_id = $_user_id;
         $this->_fall = $_fall;
         $this->_winter = $_winter;
         $this->_spring = $_spring;
         $this->_summer = $_summer;
+        $this->_advisor = $_advisor;
     }
 
     /**
@@ -102,6 +105,22 @@ class Advisee
     public function setSummer($summer): void
     {
         $this->_summer = $summer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdvisor()
+    {
+        return $this->_advisor;
+    }
+
+    /**
+     * @param mixed $advisor
+     */
+    public function setAdvisor($advisor): void
+    {
+        $this->_advisor = $advisor;
     }
 
 }

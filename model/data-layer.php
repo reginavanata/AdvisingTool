@@ -27,8 +27,8 @@ class DataLayer
     function insertPlan($advisee)
     {
         //define the query
-        $sql = "INSERT INTO advising_plans (user_id, fall, winter, spring, summer)
-                VALUES (:user_id, :fall, :winter, :spring, :summer)";
+        $sql = "INSERT INTO advising_plans (user_id, fall, winter, spring, summer, advisor)
+                VALUES (:user_id, :fall, :winter, :spring, :summer, :advisor)";
 
         //prepare the statement
         $statement = $this->_dbh->prepare($sql);
@@ -39,6 +39,7 @@ class DataLayer
         $statement->bindParam(':winter', $advisee->getWinter());
         $statement->bindParam(':spring', $advisee->getSpring());
         $statement->bindParam(':summer', $advisee->getSummer());
+        $statement->bindParam(':advisor', $advisee->getAdvisor());
 
         //execute the query
         $statement->execute();
@@ -98,10 +99,10 @@ class DataLayer
      * Update plan for the given user_id
      * all fields will be updated
      * */
-    function updatePlan($user_id, $fall, $winter, $spring, $summer)
+    function updatePlan($user_id, $fall, $winter, $spring, $summer, $advisor)
     {
         //define the query
-        $sql = 'UPDATE advising_plans SET fall = :fall, winter = :winter, spring = :spring, summer = :summer, last_updated = CURRENT_TIMESTAMP
+        $sql = 'UPDATE advising_plans SET fall = :fall, winter = :winter, spring = :spring, summer = :summer, advisor = :advisor, last_updated = CURRENT_TIMESTAMP
                 WHERE user_id = :user_id';
 
         //prepare the statement
@@ -113,6 +114,7 @@ class DataLayer
         $statement->bindParam(':winter', $winter);
         $statement->bindParam(':spring', $spring);
         $statement->bindParam(':summer', $summer);
+        $statement->bindParam(':advisor', $advisor);
 
         //execute the query
         $statement->execute();

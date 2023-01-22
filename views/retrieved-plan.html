@@ -27,6 +27,9 @@
   <label for="summerClasses">Summer Quarter 2023</label>
   <textarea id="summerClasses" name="summerClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['summer']}}</textarea>
 
+  <label for="advisorName">Advisor Name</label>
+  <textarea id="advisorName" name="advisorName" rows="1" cols="25">{{@SESSION.retrievedPlan[0]['advisor']}}</textarea>
+
   <button type="submit">Save Plan</button>
 </form>
 
