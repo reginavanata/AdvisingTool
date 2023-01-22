@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,26 +9,19 @@
 <body>
 <h1>Advise-It Admin Login</h1>
 
-<p>ID: {{@SESSION.retrievedPlan[0]['user_id']}}</p>
-<p>Last Updated: {{@SESSION.lastUpdated}}</p>
+<!--<p>ID: {{@SESSION.retrievedPlan[0]['user_id']}}</p>-->
+<!--<p>Last Updated: {{@SESSION.lastUpdated}}</p>-->
 
 
 <form action="#" method="post">
 
-  <label for="fallClasses">Fall Quarter 2022</label>
-  <textarea id="fallClasses" name="fallClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['fall']}}</textarea>
+  <label for="username">Username</label>
+  <input type="text" id="username" name="username">Enter Username</input>
 
-  <label for="winterClasses">Winter Quarter 2022</label>
-  <textarea id="winterClasses" name="winterClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['winter']}}</textarea>
+  <label for="password">Password</label>
+  <input type="text" id="password" name="password">Enter Password</input>
 
-  <label for="springClasses">Spring Quarter 2023</label>
-  <textarea id="springClasses" name="springClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['spring']}}</textarea>
 
-  <label for="summerClasses">Summer Quarter 2023</label>
-  <textarea id="summerClasses" name="summerClasses" rows="5" cols="33">{{@SESSION.retrievedPlan[0]['summer']}}</textarea>
-
-  <label for="advisorName">Advisor Name</label>
-  <textarea id="advisorName" name="advisorName" rows="1" cols="25">{{@SESSION.retrievedPlan[0]['advisor']}}</textarea>
 
   <button type="submit">Save Plan</button>
 </form>

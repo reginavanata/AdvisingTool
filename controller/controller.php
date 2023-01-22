@@ -24,6 +24,57 @@ class Controller
         session_destroy();
     }
 
+
+
+    function adminLogin() {
+
+        $username = "admin";
+        $password = "admin";
+        $tryAgain = "";
+
+        //Admin login page here
+
+        //if we arrived at this function through routing, display admin login page
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $view = new Template();
+            echo $view->render('views/admin-login.html');
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $inputName = $_POST["username"];
+            $usernameErr = "";
+
+            if (empty($_POST["username"])) {
+                $usernameErr = "Please enter a username";
+            } else {
+                if ($inputName != $username) {
+                    $usernameErr = "Invalid username entered";
+                }
+            }
+
+            $inputPassword = $_POST["password"];
+            $passwordErr = "";
+
+            if (empty($_POST["password"])) {
+                $passwordErr = "Please enter a password";
+            } else {
+                if ($inputPassword != $password) {
+                    $passwordErr = "Invalid password entered";
+                    $tryAgain = "Please try again.";
+                }
+            }
+
+
+            if ($usernameErr == "" && $passwordErr=="") {
+                $_SESSION['adminValid'] = $username;
+                header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/admin-panel.html");
+            }
+        }
+
+    }
+
+
+
     function generateIdentifier(): string
     {
         $n = 3;
