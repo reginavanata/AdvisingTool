@@ -29,20 +29,22 @@ class Controller
         //if we arrived here via get request, show the admin panel
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
-            $retrievedPlansArray =  $GLOBALS['dataLayer']->getAllPlans();
-            $_SESSION['retrievedPlan'] = $retrievedPlansArray;
-
             $view = new Template();
-            echo $view->render('views/admin-panel.html');
+            echo $view->render('views/admin-panel.php');
         }
 
-        //if we posted to this page, display all the academic plans
+        //if we posted to this page, retrieve the plans to display
+        //later, we will add switch for different admin panel functions
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+            //for now we will automatically retrieve all the plans,
 
+            $retrievedPlansArray =  $GLOBALS['dataLayer']->getAllPlans();
+            $_SESSION['retrievedPlans'] = $retrievedPlansArray;
 
+            $this->debug();
             $view = new Template();
-            echo $view->render('views/admin-panel.html');
+            echo $view->render('views/admin-panel.php');
         }
 
 

@@ -36,7 +36,7 @@ $f3->route('GET|POST /adminlogin', function($f3) {
 });
 
 //Routing to admin PANEL page, post-login
-$f3->route('GET /adminpanel', function($f3) {
+$f3->route('GET|POST /adminpanel', function($f3) {
     $GLOBALS['con']->adminPanel();
 });
 

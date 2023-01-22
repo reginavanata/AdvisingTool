@@ -95,6 +95,30 @@ class DataLayer
         return $result;
     }
 
+
+    function getAllPlans()
+    {
+        //1. Define the query
+        $sql = "SELECT user_id, last_updated, advisor  FROM advising_plans";
+
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameters
+
+
+//        $statement->bindParam(':user_id', $user_id);
+        //4. Execute the query
+        $statement->execute();
+
+        //5. Process the results (get the primary key)
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+
+
     /*
      * Update plan for the given user_id
      * all fields will be updated
