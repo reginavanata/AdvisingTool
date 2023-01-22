@@ -17,6 +17,10 @@ echo "This is now a php page.";
 
 <h2>This is the admin panel</h2>
 
+<h1>
+
+
+</h1>
 
 <form action="#" method="post" >
   <button type="submit">Display All Created Plans</button>
@@ -33,22 +37,15 @@ echo "This is now a php page.";
 
     <tbody>
 
-    <?php
-    foreach ($_SESSION['retrievedPlans'] as $row) {
+    {{@SESSION.retrievedPlan[0]['fall']}}
 
-        $uniqueID = $row[0]['user_id'];
-        $lastUpdated = $row[0]['last_updated'];
-        $advisor = $row[0]['advisor'];
-
-
-        echo "
-                   <tr>          
-                        <td>$uniqueID</td>
-                        <td>$lastUpdated</td>
-                        <td>$advisor</td>
-                    </tr>";
-    }
-    ?>
+    <repeat group="{{ @SESSION.retrievedPlans }}" value="{{ @plan }}">
+        <tr>
+            <td>{{ @plan['user_id'] }}</td>
+            <td>{{ @plan['last_updated'] }}</td>
+            <td>{{ @plan['advisor'] }}</td>
+        </tr>
+    </repeat>
     </tbody>
 </table>
 
