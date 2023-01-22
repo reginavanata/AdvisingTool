@@ -30,9 +30,14 @@ $f3->route('GET /', function() {
 
 });
 
-//Routing to admin page
+//Routing to admin LOGIN page
 $f3->route('GET|POST /adminlogin', function($f3) {
     $GLOBALS['con']->adminLogin();
+});
+
+//Routing to admin PANEL page, post-login
+$f3->route('GET /adminpanel', function($f3) {
+    $GLOBALS['con']->adminPanel();
 });
 
 //Routing to a new plan

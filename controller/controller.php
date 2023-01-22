@@ -24,7 +24,29 @@ class Controller
         session_destroy();
     }
 
+    function adminPanel() {
 
+        //if we arrived here via get request, show the admin panel
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+            $retrievedPlansArray =  $GLOBALS['dataLayer']->getAllPlans();
+            $_SESSION['retrievedPlan'] = $retrievedPlansArray;
+
+            $view = new Template();
+            echo $view->render('views/admin-panel.html');
+        }
+
+        //if we posted to this page, display all the academic plans
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+
+            $view = new Template();
+            echo $view->render('views/admin-panel.html');
+        }
+
+
+    }
 
     function adminLogin() {
 
@@ -34,12 +56,13 @@ class Controller
 
         //Admin login page here
 
-        //if we arrived at this function through routing, display admin login page
+        //if we arrived at this function through a GET request, display admin login page
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $view = new Template();
             echo $view->render('views/admin-login.html');
         }
 
+        //if we arrived at this function through a POST
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $inputName = $_POST["username"];
             $usernameErr = "";
@@ -67,7 +90,10 @@ class Controller
 
             if ($usernameErr == "" && $passwordErr=="") {
                 $_SESSION['adminValid'] = $username;
-                header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/admin-panel.html");
+                header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/adminpanel");
+            }
+            else {
+                header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/adminlogin");
             }
         }
 
