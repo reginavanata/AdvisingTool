@@ -10,9 +10,12 @@ echo "This is now a php page.";
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="styles/styles.css">
+
   <title>Admin Panel</title>
 </head>
 <body>
+testing
 <h1>Advise-It Admin Panel</h1>
 
 <h2>This is the admin panel</h2>
