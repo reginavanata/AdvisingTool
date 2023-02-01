@@ -168,9 +168,34 @@ class Controller
 //        $allIdentifiers = $GLOBALS['dataLayer']->getAllIdentifiers();
 
         $_SESSION['newSixDigits'] = $this->generateUniqueIdentifier();
+
+
+        $planIdentifier = $_SESSION['newSixDigits'];
+        $fallClasses = $_POST['fallClasses'];
+        $winterClasses = $_POST['winterClasses'];
+        $springClasses = $_POST['springClasses'];
+        $summerClasses = $_POST['summerClasses'];
+        $advisorName = $_POST['advisorName'];
+
+
+        $_SESSION['advisee'] = new Advisee($planIdentifier, $fallClasses, $winterClasses, $springClasses, $summerClasses, $advisorName);
+
+        /*^in theory, you could post an existing id to this page and wipe the entry for that id, we should prevent
+        insertion with existing IDs here*/
+
+
+        $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
+        session_destroy();
+
+        $_SESSION['isNewAndUnsaved'] = true;
         $this->debug();
+        header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$planIdentifier);
         $view = new Template();
         echo $view->render('views/blank-plan.html');
+
+
+
+
     }
 
     function savePlan()
@@ -194,7 +219,6 @@ class Controller
 
 
             $GLOBALS['dataLayer']->insertPlan($_SESSION['advisee']);
-            session_destroy();
             header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$planIdentifier);
         }
     }
@@ -231,6 +255,10 @@ class Controller
 
         //If the form has been posted
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+            if($_SESSION['isNewAndUnsaved'] = true) {
+
+            }
 
             //pull off the id from the url
             $urlID = substr($_SERVER['REQUEST_URI'], -6);
