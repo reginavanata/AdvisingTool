@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Retrieved Plan</title>
-
+  <link rel="stylesheet" href="../styles/styles.css">
   <script src="../scripts/script.js"></script>
 </head>
 <body>
@@ -13,6 +13,7 @@
 
 <p>ID: {{@SESSION.retrievedPlan[0]['user_id']}}</p>
 <p>Last Updated: {{@SESSION.lastUpdated}}</p>
+<button id="printButton">Print</button>
 
 
 <form action="#" method="post">

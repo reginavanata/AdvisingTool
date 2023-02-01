@@ -1,5 +1,22 @@
 @media print {
     body {
-        color: red;
+        color: black;
+    }
+
+    textarea{
+        display: block;
+        border: none;
+        resize:none;
+        text-indent: 50px;
+        height: auto;
+        width: auto;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    button {
+        display: none;
     }
 }
