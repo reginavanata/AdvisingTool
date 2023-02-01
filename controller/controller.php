@@ -42,7 +42,7 @@ class Controller
             $retrievedPlansArray =  $GLOBALS['dataLayer']->getAllPlans();
             $_SESSION['retrievedPlans'] = $retrievedPlansArray;
 
-            $this->debug();
+            //$this->debug();
             $view = new Template();
             echo $view->render('views/admin-panel.php');
         }
@@ -188,7 +188,7 @@ class Controller
         session_destroy();
 
         $_SESSION['isNewAndUnsaved'] = true;
-        $this->debug();
+        //$this->debug();
         header("Location: https://ptagliavia.greenriverdev.com/AdvisingTool/savedplan/".$planIdentifier);
         $view = new Template();
         echo $view->render('views/blank-plan.html');
